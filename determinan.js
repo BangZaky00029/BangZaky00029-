@@ -20,29 +20,8 @@ function findDeterminant(matrix) {
             matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0])
         );
     } else {
-        var determinant = 0;
-        for (var j = 0; j < order; j++) {
-            determinant += matrix[0][j] * cofactor(matrix, 0, j);
-        }
-        return determinant;
+        return 'Determinant calculation for this order is not supported.';
     }
-}
-
-function cofactor(matrix, row, col) {
-    var minorMatrix = [];
-    for (var i = 0; i < matrix.length; i++) {
-        if (i !== row) {
-            var minorRow = [];
-            for (var j = 0; j < matrix[i].length; j++) {
-                if (j !== col) {
-                    minorRow.push(matrix[i][j]);
-                }
-            }
-            minorMatrix.push(minorRow);
-        }
-    }
-    var sign = (row + col) % 2 === 0 ? 1 : -1;
-    return sign * findDeterminant(minorMatrix);
 }
 
 function explainDeterminant(matrix) {
@@ -68,25 +47,6 @@ function explainDeterminant(matrix) {
         explanation += `(${c} * ${e} * ${g}) - (${b} * ${d} * ${i}) - (${a} * ${f} * ${h})\n`;
         explanation += `= ${a * e * i} + ${b * f * g} + ${c * d * h} - ${c * e * g} - ${b * d * i} - ${a * f * h}\n`;
         explanation += `= ${a * e * i + b * f * g + c * d * h - c * e * g - b * d * i - a * f * h}`;
-        return explanation;
-    } else if (order === 4) {
-        var explanation = `Langkah-langkah perhitungan determinan:\n`;
-        explanation += `Determinan dihitung menggunakan ekspansi kofaktor sebagai berikut:\n`;
-        
-        for (var j = 0; j < order; j++) {
-            explanation += `+ (${matrix[0][j]}) * C(${0},${j})\n`;
-        }
-        explanation += `di mana C(i,j) adalah kofaktor elemen pada baris i dan kolom j.\n`;
-        explanation += `Kofaktor dihitung dengan mengeluarkan baris dan kolom dari elemen tersebut dan mengambil determinan dari matriks minor yang dihasilkan.\n`;
-
-        var determinant = 0;
-        for (var j = 0; j < order; j++) {
-            var cof = cofactor(matrix, 0, j);
-            explanation += `Kofaktor C(${0},${j}) = ${cof}\n`;
-            determinant += matrix[0][j] * cof;
-        }
-        explanation += `Total determinan: ${determinant}\n`;
-
         return explanation;
     } else {
         return 'Penjelasan perhitungan determinan untuk ordo ' + order + 'x' + order + ' belum tersedia.';
